@@ -1,0 +1,22 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "packages": {
+    "rust": {
+      "release-type": "rust",
+      "package-name": "my-app",
+      "component": "rust"
+    },
+    "typescript": {
+      "release-type": "node",
+      "component": "typescript"
+    },
+    "elixir": {
+      "release-type": "elixir",
+      "component": "elixir"
+    },
+    "python": {
+      "release-type": "python",
+      "component": "python"
+    }
+  }
+}
