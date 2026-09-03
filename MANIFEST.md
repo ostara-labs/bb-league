@@ -1,8 +1,8 @@
 # MANIFEST
 
-Every file and directory in this template, what it does, and what to do with
-it. Your first PR after generating the repository is the selection pass:
-decide which stacks to keep, delete the rest, and rename the placeholders.
+Every notable file in this repository, what it does, and what to do with it.
+Generated from [ostara-labs/repo-template](https://github.com/ostara-labs/repo-template)
+on 2026-09-02; the selection pass kept the TypeScript stack only.
 
 ## Inventory
 
@@ -51,65 +51,22 @@ decide which stacks to keep, delete the rest, and rename the placeholders.
 | .release-please-manifest.json | Release manifest; one entry per stack | Adapt (delete per-stack entries) |
 | scripts/setup-rulesets.sh | Provisions the main-protection ruleset and the requires-human-review label on a fresh repo (run once post-bootstrap) | Keep |
 
-### Rust
-
-| Path | Purpose | Action |
-|---|---|---|
-| rust/ | Crate `my-app` (lib `my_app`); marker Cargo.toml | Delete-if-unused |
-| rust/.gitignore | Stack ignores | Delete-if-unused |
-
 ### TypeScript
 
 | Path | Purpose | Action |
 |---|---|---|
-| typescript/ | Package `@your-org/my-app`; marker package.json | Delete-if-unused |
-| typescript/.gitignore | Stack ignores | Delete-if-unused |
-
-### Elixir
-
-| Path | Purpose | Action |
-|---|---|---|
-| elixir/ | App `:my_app` / `MyApp`; marker mix.exs | Delete-if-unused |
-| elixir/.gitignore | Stack ignores | Delete-if-unused |
-
-### Python
-
-| Path | Purpose | Action |
-|---|---|---|
-| python/ | Package `my-package` / `my_package`; marker pyproject.toml | Delete-if-unused |
-| python/.gitignore | Stack ignores | Delete-if-unused |
-
-## Deleting a stack
-
-To remove a stack (example: Rust), delete all of the following — no Makefile
-edits are needed:
-
-1. The stack directory (`rust/`).
-2. The Rust caller job in `.github/workflows/ci.yml` — plus the same
-   stack name in the `gate` job's `needs` list (a `needs` entry pointing
-   at a deleted job invalidates the whole workflow).
-3. The Rust section in `.github/dependabot.yml`.
-4. The Rust entry in `release-please-config.json` and
-   `.release-please-manifest.json`.
-5. Mentions in README.md and CONTRIBUTING.md.
-
-(The Rust logic itself lives centrally in the devtools submodule — nothing
-to delete there; the caller job is what gates it.)
-
-Repeat for each stack you do not keep.
+| typescript/ | Package `@ostara-labs/bb-league`; marker package.json | Keep |
+| typescript/.gitignore | Stack ignores | Keep |
 
 ## Rename placeholders
 
-| Placeholder | Where |
-|---|---|
-| `your-org` | README.md, typescript/package.json, SECURITY.md, CODE_OF_CONDUCT.md, .github/ISSUE_TEMPLATE/config.yml |
-| `@oloompa` | .github/CODEOWNERS (trust-boundary owners) |
-| `my-app` / `my_app` | rust/Cargo.toml, rust/src/lib.rs |
-| `@your-org/my-app` | typescript/package.json |
-| `:my_app` / `MyApp` | elixir/mix.exs, elixir/lib/ |
-| `my-package` / `my_package` | python/pyproject.toml, python/src/ |
-| `Your Name` | LICENSE |
-| `<repo-name>` | README.md, docs/architecture/ARCHITECTURE.md |
+| Placeholder | Where | Status |
+|---|---|---|
+| `Your Name` | LICENSE | **pending — ask the repo owner** |
+
+(Renamed during the selection pass: `your-org` -> `ostara-labs`,
+`@your-org/my-app` -> `@ostara-labs/bb-league`, `<repo-name>` -> `bb-league`.
+`@oloompa` in .github/CODEOWNERS is the maintainer identity, kept as-is.)
 
 ## Post-bootstrap hardening
 
@@ -120,11 +77,11 @@ After the first push:
       CI workflows, dependency policy, release automation, hook config, or
       governance files require a code-owner approval to merge. Normal PRs
       (code, docs, dependency bumps) need no approval.
-- [ ] Branch protection on `main`: run
-      `bash scripts/setup-rulesets.sh <owner>/<repo>` — creates the
-      "main-protection" ruleset (PRs required, force-push/deletion blocked,
-      status checks required, code-owner review for trust-boundary paths)
-      and the `requires-human-review` label.
+- [x] Branch protection on `main`: provisioned via
+      `scripts/setup-rulesets.sh` — the "main-protection" ruleset (PRs
+      required, force-push/deletion blocked, status checks required,
+      code-owner review for trust-boundary paths) and the
+      `requires-human-review` label exist.
 - [ ] Secret scanning with push protection: ON.
 - [ ] Dependabot alerts: ON.
 - [ ] Auto-merge: ON (Settings → General → Pull Requests → *Allow
