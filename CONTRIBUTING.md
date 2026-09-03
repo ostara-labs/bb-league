@@ -16,16 +16,11 @@
 
 - GNU Make >= 4: `brew install make` (or Xcode Command Line Tools)
 
-## Toolchains
-
-Install only the toolchains for the stacks you keep:
+## Toolchain
 
 | Stack | Toolchain |
 |---|---|
-| Rust | rustup stable (pinned by rust-toolchain.toml) |
 | TypeScript | Node 22 + pnpm (via corepack) |
-| Elixir | OTP 27 + Elixir 1.18 |
-| Python | uv |
 
 ## Getting started
 
@@ -54,7 +49,7 @@ Conventional Commits. The type is required; the scope is optional.
 | revert | Revert a commit |
 
 Breaking changes: append `!` to the type, e.g. `feat!: drop Node 20`.
-Scope: optional, e.g. `feat(rust): add greet`.
+Scope: optional, e.g. `feat(league): add standings`.
 
 ## Pull requests
 
