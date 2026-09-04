@@ -29,20 +29,15 @@ job (the recipe lives in the template repository).
 
 ```mermaid
 flowchart LR
-    A[Source: typescript/ + Makefile] --> B[Local: make ci + pre-commit]
+    A[Source: typescript/ + Makefile] --> B[Local: make ci + git hooks]
     B --> C[GitHub Actions: ci.yml]
-    C --> D[devtools: typescript-ci.yml]
-    C --> E[gitleaks]
-    C --> F[workflow-lint]
-    D --> G[gate]
-    E --> G
-    F --> G
-    G --> H[Merge to main]
+    C --> D[devtools aggregate: core + typescript + gate]
+    D --> H[Merge to main]
     H --> I[release-please]
     I --> J[Tags + CHANGELOG + releases]
 ```
 
-Local gates (pre-commit + `make ci`) and CI gates (ci.yml + security.yml)
+Local gates (git hooks + `make ci`) and the CI gate (the devtools aggregate)
 run the same commands, so a green local run predicts a green CI run. Merges
 to main trigger release-please, which derives versions and changelogs from
 Conventional Commits.
@@ -52,8 +47,8 @@ Conventional Commits.
 | Concern | Location |
 |---|---|
 | Local entrypoint | Makefile (canonical targets: help, hooks, format, lint, test, build, ci, clean) |
-| Local hooks | .pre-commit-config.yaml |
-| CI | ci.yml (typescript caller + workflow-lint + gitleaks + gate); stack logic in devtools workflows |
+| Local hooks | devtools git hooks (activate via `make hooks`) |
+| CI | ci.yml — one-job caller of the devtools aggregate (pinned by digest) |
 | Security scan | .github/workflows/security.yml + .gitleaks.toml |
 | Releases | .github/workflows/release.yml + release-please-config.json |
 | Governance | AGENTS.md, CONTRIBUTING.md, SECURITY.md, CODE_OF_CONDUCT.md |

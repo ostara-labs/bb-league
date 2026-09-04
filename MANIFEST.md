@@ -11,7 +11,6 @@ on 2026-09-02; the selection pass kept the TypeScript stack only.
 | Path | Purpose | Action |
 |---|---|---|
 | Makefile | Entrypoint; canonical targets (help, hooks, format, lint, test, build, ci, clean) | Keep |
-| .pre-commit-config.yaml | Local hooks: hygiene, gitleaks, conventional commits, no-commit-to-main | Keep |
 | .editorconfig | Editor defaults (LF, indentation) | Keep |
 | .gitattributes | Line endings, linguist hints | Keep |
 | .gitignore | Root ignores (stack ignores live in stack dirs) | Keep |
@@ -38,9 +37,9 @@ on 2026-09-02; the selection pass kept the TypeScript stack only.
 | .github/dependabot.yml | Dependency updates | Adapt (delete per-stack sections) |
 | .github/pull_request_template.md | PR template | Keep |
 | .github/ISSUE_TEMPLATE/ | Issue templates | Keep |
-| .github/workflows/ci.yml | Main CI; thin callers to devtools + workflow-lint gate | Adapt (delete per-stack caller jobs + gate.needs entries) |
-| .devtools/ (submodule) | Shared makefiles, workflows, hooks — ostara-labs/devtools @ v1.0.0 | Keep (update via `make devtools-update`) |
-| .gitmodules | Submodule definition: .devtools -> ostara-labs/devtools @ v1.0.0 | Keep |
+| .github/workflows/ci.yml | Aggregate CI caller — one job invoking the devtools aggregate, pinned by digest | Keep |
+| .devtools/ (submodule) | Shared makefiles, git hooks, aggregate + stack workflows — ostara-labs/devtools @ v1.3.3 | Keep (update via `make devtools-update`) |
+| .gitmodules | Submodule definition: .devtools -> ostara-labs/devtools @ v1.3.3 | Keep |
 | .github/workflows/security.yml | gitleaks scan | Keep |
 | .github/workflows/release.yml | release-please | Keep |
 | .github/workflows/pr-classify.yml | Trust-boundary PR labeling | Keep |

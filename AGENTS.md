@@ -70,7 +70,8 @@ mandatory: loading more dilutes attention.
 
 - Never commit real secrets or `.env` files. `.env.example` is the only
   committed template.
-- gitleaks runs in pre-commit and CI (security.yml); a leak blocks the PR.
+- gitleaks runs in the local git hooks and CI (security.yml); a leak
+  blocks the PR.
 - Report vulnerabilities via SECURITY.md.
 
 ## PR maturity loop
@@ -106,7 +107,7 @@ paths (see CODEOWNERS).
 
 - Add dependencies.
 - Edit `.github/workflows/**`.
-- Change the Makefile contract or `.pre-commit-config.yaml`.
+- Change the Makefile contract or the devtools hooks (`.devtools/`).
 - Touch LICENSE. (MANIFEST.md maintenance is routine work — see
   Documentation policy above.)
 
