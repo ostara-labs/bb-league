@@ -1,40 +1,46 @@
-# repo-template
+# bb-league
 
-A production-grade multi-language repository template: four optional stacks
-(Rust, TypeScript, Elixir, Python) behind one GNU Make entrypoint, one CI
-pipeline, and one release process. Use it as the starting point for any new
-project — keep the stacks you need, delete the rest, zero Makefile edits.
+A responsive web companion for a **Blood Bowl league campaign**: the league's
+scorekeeper and team manager. It runs seasons (divisions, fixtures,
+standings), keeps teams (drafting, treasury, staff), records match days, and
+tracks player progression (experience, injuries, level-ups) — so coaches
+never do bookkeeping by hand. It organizes and records; it never simulates
+the tabletop game.
 
-[![CI](https://github.com/ostara-labs/repo-template/actions/workflows/ci.yml/badge.svg)](https://github.com/ostara-labs/repo-template/actions/workflows/ci.yml)
-[![Security](https://github.com/ostara-labs/repo-template/actions/workflows/security.yml/badge.svg)](https://github.com/ostara-labs/repo-template/actions/workflows/security.yml)
-[![Release](https://img.shields.io/github/v/release/ostara-labs/repo-template)](https://github.com/ostara-labs/repo-template/releases)
-[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/ostara-labs/repo-template/badge)](https://api.scorecard.dev/projects/github.com/ostara-labs/repo-template)
+Grounded in the current official ruleset: Blood Bowl — Third Season Edition
+(BB2025). The domain rules and glossary live in
+[docs/domain/](docs/domain/README.md).
+
+[![CI](https://github.com/ostara-labs/bb-league/actions/workflows/ci.yml/badge.svg)](https://github.com/ostara-labs/bb-league/actions/workflows/ci.yml)
+[![Security](https://github.com/ostara-labs/bb-league/actions/workflows/security.yml/badge.svg)](https://github.com/ostara-labs/bb-league/actions/workflows/security.yml)
+[![Release](https://img.shields.io/github/v/release/ostara-labs/bb-league)](https://github.com/ostara-labs/bb-league/releases)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/ostara-labs/bb-league/badge)](https://api.scorecard.dev/projects/github.com/ostara-labs/bb-league)
+
+## What the app does (planned)
+
+| Area | Scope |
+|---|---|
+| Season | Leagues and divisions, fixtures, automatic standings, play-offs, end-of-season re-draft |
+| Team | Guided draft within the 1,000,000 gp budget, live team-value computation, treasury and staff |
+| Match day | Step-by-step pre-game sequence, one-screen result entry, automatic post-game processing (winnings, fans, SPP, injuries) |
+| Progression | Level-ups and skill choices, persistent injuries, journeymen, hiring/firing |
 
 ## What's inside
 
 | Area | Contents |
 |---|---|
-| Stacks | `rust/`, `typescript/`, `elixir/`, `python/` — each optional, auto-detected via its marker file |
+| Stack | `typescript/` — web app package `@ostara-labs/bb-league` (Node 22 + pnpm, Biome, vitest) |
 | Tooling | GNU Make, gitleaks, Conventional Commits, release-please |
-| CI/CD | GitHub Actions: lint + test per stack, security scan, release automation |
+| CI/CD | GitHub Actions: aggregate CI (devtools), security scan, release automation |
 | Governance | AGENTS.md, CONTRIBUTING.md, SECURITY.md, CODE_OF_CONDUCT.md, ADRs |
 
-## Quickstart
+## Getting started
 
-1. **Create the repository.** Click "Use this template" on GitHub, or clone
-   this repository and push it to a new remote.
-2. **Run the selection pass.** Open MANIFEST.md — your first PR is deciding
-   which stacks to keep. Delete the stacks you do not need plus their CI,
-   Dependabot, and release-please entries (exact instructions in MANIFEST.md).
-3. **Rename placeholders.** Replace `your-org`, `my-app`, `@your-org/my-app`,
-   `:my_app`/`MyApp`, and `my-package`/`my_package` with your real names
-   (table in MANIFEST.md).
-4. **Install hooks.** `make hooks` (activates the devtools git hooks —
-   pre-commit, commit-msg, pre-push).
-5. **Push and harden.** Push to `main`, then provision branch protection
-   with `bash scripts/setup-rulesets.sh <owner>/<repo>` (requires PRs and
-   the `gate` status check), enable secret scanning with push protection,
-   and Dependabot alerts. Full checklist in MANIFEST.md.
+1. Clone with submodules: `git clone --recurse-submodules <url>` (or run
+   `git submodule update --init` in an existing clone).
+2. Install dependencies and hooks: `make deps && make hooks` — hooks are
+   the devtools git hooks (pre-commit, commit-msg, pre-push).
+3. Run the full gate: `make ci`.
 
 ## Commands
 
@@ -42,40 +48,31 @@ project — keep the stacks you need, delete the rest, zero Makefile edits.
 |---|---|
 | `make help` | List all targets |
 | `make hooks` | Activate the devtools git hooks |
-| `make deps` | Install dependencies in all kept stacks |
-| `make format` | Format all kept stacks |
-| `make lint` | Lint all kept stacks |
-| `make test` | Test all kept stacks |
-| `make build` | Build all kept stacks |
+| `make deps` | Install dependencies |
+| `make format` | Format code |
+| `make lint` | Biome + tsc --noEmit |
+| `make test` | Vitest |
+| `make build` | tsc build |
 | `make ci` | `lint` + `test` — the full local gate |
 | `make clean` | Remove build artifacts |
-| `make lint-rust` | One stack only (`-typescript`, `-elixir`, `-python` also available) |
-
-Absent stacks print `[target] skipped (no <marker>)` and are ignored.
 
 ## Requirements
 
 - GNU Make >= 4
-- Toolchains for the stacks you keep: Rust stable (pinned by
-  rust-toolchain.toml), Node 22 + pnpm, OTP 27 + Elixir 1.18, uv (Python)
+- Node 22 + pnpm (via corepack)
 - **Windows:** `choco install make` for GNU Make >= 4, and Git Bash in PATH —
   the Makefile recipes are POSIX. Line endings are enforced as LF by
   `.gitattributes`.
 
 ## Documentation
 
-Suggested reading order for humans: MANIFEST → CONTRIBUTING → the docs
-tree below (guidelines first).
-
-- MANIFEST.md — file inventory and bootstrap checklist
+- MANIFEST.md — file inventory
 - CONTRIBUTING.md — setup, conventions, PR process
-- SECURITY.md — supported versions and vulnerability reporting
+- docs/domain/ — the Blood Bowl league domain: glossary and one concept doc
+  per core area (league, team, player, match)
 - docs/architecture/ARCHITECTURE.md — layout rationale and CI/CD flow
-- docs/architecture/decisions/ — architecture decision records
-- docs/guidelines/ — repo rules (engineering principles: coding-patterns.md)
-- docs/processes/ — process and code-walkthrough docs (code wins over prose)
-- docs/domain/ — business-domain concepts and glossary (fill after bootstrap)
-- docs/how-to/ — task-oriented recipes for humans
+- docs/guidelines/ — engineering principles (coding-patterns.md)
+- SECURITY.md — supported versions and vulnerability reporting
 
 ## License
 

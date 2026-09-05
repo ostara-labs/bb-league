@@ -2,39 +2,32 @@
 
 ## Project overview
 
-Multi-language template repository: four optional stacks (Rust, TypeScript,
-Elixir, Python) behind one GNU Make entrypoint. Stacks are auto-detected via
-marker files (rust/Cargo.toml, typescript/package.json, elixir/mix.exs,
-python/pyproject.toml); deleting a stack means deleting its dir plus its CI,
-Dependabot, and release-please entries — zero Makefile edits. Distributed via
-GitHub "Use this template"; generated projects inherit these rules.
+bb-league: a responsive TypeScript web app that accompanies a Blood Bowl
+league campaign — seasons, teams, match recording, and player progression —
+grounded in the official Third Season Edition rules (BB2025). The domain
+concepts and game rules live in docs/domain/; read them before any feature
+work. Generated from ostara-labs/repo-template (TypeScript stack only).
 
 ## Commands
 
 - `make ci` — full local gate (lint + test). Run before declaring work done.
-- `make deps` — install dependencies for all present stacks (run after clone).
+- `make deps` — install dependencies (run after clone).
 - `make lint`, `make test`, `make format`, `make build`, `make clean`
-- Per-stack: `make lint-rust`, `make test-typescript`, ... (suffixes:
-  -rust, -typescript, -elixir, -python). Absent stacks print
-  `[target] skipped (no <marker>)`.
-- Single tests:
-  - Rust: `cargo test <name>` from rust/
-  - TypeScript: `cd typescript && pnpm exec vitest run <path>`
-  - Elixir: `mix test <path>` from elixir/
-  - Python: `uv run pytest <path>::<test_name>` from python/
+- Per-stack: `make lint-typescript`, `make test-typescript` (other suffixes
+  still exist in the shared makefiles; absent stacks print
+  `[target] skipped (no <marker>)`).
+- Single test: `cd typescript && pnpm exec vitest run <path>`
 
 ## Structure
 
-- rust/ — crate `my-app` (lib `my_app`); marker Cargo.toml
-- typescript/ — package `@your-org/my-app`; marker package.json
-- elixir/ — app `:my_app` / `MyApp`; marker mix.exs
-- python/ — package `my-package` / `my_package`; marker pyproject.toml
+- typescript/ — package `@ostara-labs/bb-league`; marker package.json
 - .github/ — workflows, dependabot, issue/PR templates
 - .devtools/ — submodule (ostara-labs/devtools): shared makefiles + stack
   CI workflows. Update deliberately via `make devtools-update`, then commit
   the submodule pointer bump.
 - docs/ — architecture/ (ARCHITECTURE.md + decisions/ ADRs),
-  guidelines/ (coding-patterns.md), processes/, domain/, how-to/
+  guidelines/ (coding-patterns.md), processes/, domain/ (the Blood Bowl
+  league domain: glossary.md + league/team/player/match), how-to/
 
 ## Documentation policy
 
@@ -68,19 +61,17 @@ mandatory: loading more dilutes attention.
 
 ## Code style
 
-- Rust: rustfmt + clippy `-D warnings`; 4-space indent
-- TypeScript: Biome 2.x; 2-space indent
-- Elixir: `mix format` + credo `--strict`; 2-space indent
-- Python: ruff (check + format); 4-space indent
+- TypeScript: Biome 2.x + strict tsconfig flags; 2-space indent
 - Commits: Conventional Commits — types: feat, fix, docs, style, refactor,
   perf, test, build, ci, chore, revert. Breaking changes: `!` after the type
-  (e.g. `feat!: ...`). Scope optional (e.g. `feat(rust): ...`).
+  (e.g. `feat!: ...`). Scope optional (e.g. `feat(league): ...`).
 
 ## Security and secrets
 
 - Never commit real secrets or `.env` files. `.env.example` is the only
   committed template.
-- gitleaks runs in pre-commit and CI (security.yml); a leak blocks the PR.
+- gitleaks runs in the local git hooks and CI (security.yml); a leak
+  blocks the PR.
 - Report vulnerabilities via SECURITY.md.
 
 ## PR maturity loop
@@ -116,7 +107,7 @@ paths (see CODEOWNERS).
 
 - Add dependencies.
 - Edit `.github/workflows/**`.
-- Change the Makefile contract or `.pre-commit-config.yaml`.
+- Change the Makefile contract or the devtools hooks (`.devtools/`).
 - Touch LICENSE. (MANIFEST.md maintenance is routine work — see
   Documentation policy above.)
 

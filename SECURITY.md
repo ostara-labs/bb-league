@@ -12,9 +12,8 @@ up to date.
 
 ## Reporting a vulnerability
 
-Prefer GitHub Private Vulnerability Reporting: open a private advisory via the
-repository's "Security" tab. If that is unavailable, email
-security@your-org.example.
+Use GitHub Private Vulnerability Reporting: open a private advisory via the
+repository's "Security" tab.
 
 Please do not open public issues for vulnerabilities.
 

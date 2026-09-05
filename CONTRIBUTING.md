@@ -16,24 +16,18 @@
 
 - GNU Make >= 4: `brew install make` (or Xcode Command Line Tools)
 
-## Toolchains
-
-Install only the toolchains for the stacks you keep:
+## Toolchain
 
 | Stack | Toolchain |
 |---|---|
-| Rust | rustup stable (pinned by rust-toolchain.toml) |
 | TypeScript | Node 22 + pnpm (via corepack) |
-| Elixir | OTP 27 + Elixir 1.18 |
-| Python | uv |
 
 ## Getting started
 
-1. Install pre-commit: `pipx install pre-commit` (or `pip install pre-commit`).
-2. Clone with submodules (or run `git submodule update --init` in an
-   existing clone) — the shared Makefiles live in `.devtools/`.
-3. Install dependencies and hooks: `make deps && make hooks`.
-4. Run the full gate: `make ci`.
+1. Clone with submodules (or run `git submodule update --init` in an
+   existing clone) — the shared Makefiles and git hooks live in `.devtools/`.
+2. Install dependencies and hooks: `make deps && make hooks`.
+3. Run the full gate: `make ci`.
 
 ## Commit convention
 
@@ -54,7 +48,7 @@ Conventional Commits. The type is required; the scope is optional.
 | revert | Revert a commit |
 
 Breaking changes: append `!` to the type, e.g. `feat!: drop Node 20`.
-Scope: optional, e.g. `feat(rust): add greet`.
+Scope: optional, e.g. `feat(league): add standings`.
 
 ## Pull requests
 
