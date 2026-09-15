@@ -38,8 +38,8 @@ on 2026-09-02; the selection pass kept the TypeScript stack only.
 | .github/pull_request_template.md | PR template | Keep |
 | .github/ISSUE_TEMPLATE/ | Issue templates | Keep |
 | .github/workflows/ci.yml | Aggregate CI caller — one job invoking the devtools aggregate, pinned by digest | Keep |
-| .devtools/ (submodule) | Shared makefiles, git hooks, aggregate + stack workflows — ostara-labs/devtools @ v1.3.3 | Keep (update via `make devtools-update`) |
-| .gitmodules | Submodule definition: .devtools -> ostara-labs/devtools @ v1.3.3 | Keep |
+| .devtools/ (submodule) | Shared makefiles, git hooks, aggregate + stack workflows — ostara-labs/devtools @ v1.12.1 | Keep (update via `make devtools-update`) |
+| .gitmodules | Submodule definition: .devtools -> ostara-labs/devtools @ v1.12.1 | Keep |
 | .github/workflows/security.yml | gitleaks scan | Keep |
 | .github/workflows/release.yml | release-please | Keep |
 | .github/workflows/pr-classify.yml | Trust-boundary PR labeling | Keep |
