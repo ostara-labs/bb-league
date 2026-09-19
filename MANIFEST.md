@@ -45,7 +45,6 @@ on 2026-09-02; the selection pass kept the TypeScript stack only.
 | .github/workflows/pr-classify.yml | Trust-boundary PR labeling | Keep |
 | .github/trust-boundary.yml | Trust-boundary path patterns; consumed by pr-classify.yml (requires-human-review label) and the main-protection ruleset (code-owner review) | Keep |
 | .github/workflows/pr-meta.yml | PR title lint + size/risk labels | Keep |
-| .coderabbit.yaml | AI review config (free on public repos) | Keep |
 | release-please-config.json | Release config; one entry per stack | Adapt (delete per-stack entries) |
 | .release-please-manifest.json | Release manifest; one entry per stack | Adapt (delete per-stack entries) |
 | scripts/setup-rulesets.sh | Provisions the main-protection ruleset and the requires-human-review label on a fresh repo (run once post-bootstrap) | Keep |
